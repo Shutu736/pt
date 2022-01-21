@@ -1,6 +1,6 @@
 --- a/src/base/bittorrent/session.cpp	
 +++ b/src/base/bittorrent/session.cpp
-@@ -349,27 +349,27 @@
+@@ -349,20 +349,20 @@ Session *Session::m_instance = nullptr;
  
  Session::Session(QObject *parent)
      : QObject(parent)
@@ -20,15 +20,15 @@
      , m_hashingThreads(BITTORRENT_SESSION_KEY("HashingThreadsCount"), 2)
      , m_filePoolSize(BITTORRENT_SESSION_KEY("FilePoolSize"), 5000)
 -    , m_checkingMemUsage(BITTORRENT_SESSION_KEY("CheckingMemUsageSize"), 32)
-+    , m_checkingMemUsage(BITTORRENT_SESSION_KEY("CheckingMemUsageSize"), 2048)
 -    , m_diskCacheSize(BITTORRENT_SESSION_KEY("DiskCacheSize"), -1)
-+    , m_diskCacheSize(BITTORRENT_SESSION_KEY("DiskCacheSize"), 12287)
 -    , m_diskCacheTTL(BITTORRENT_SESSION_KEY("DiskCacheTTL"), 60)
++    , m_checkingMemUsage(BITTORRENT_SESSION_KEY("CheckingMemUsageSize"), 2048)
++    , m_diskCacheSize(BITTORRENT_SESSION_KEY("DiskCacheSize"), 12287)
 +    , m_diskCacheTTL(BITTORRENT_SESSION_KEY("DiskCacheTTL"), 300)
      , m_useOSCache(BITTORRENT_SESSION_KEY("UseOSCache"), true)
  #ifdef Q_OS_WIN
      , m_coalesceReadWriteEnabled(BITTORRENT_SESSION_KEY("CoalesceReadWrite"), true)
-@@ -370,40 +370,40 @@
+@@ -370,40 +370,40 @@ Session::Session(QObject *parent)
      , m_coalesceReadWriteEnabled(BITTORRENT_SESSION_KEY("CoalesceReadWrite"), false)
  #endif
      , m_usePieceExtentAffinity(BITTORRENT_SESSION_KEY("PieceExtentAffinity"), false)
@@ -87,16 +87,16 @@
      , m_validateHTTPSTrackerCertificate(BITTORRENT_SESSION_KEY("ValidateHTTPSTrackerCertificate"), true)
      , m_SSRFMitigationEnabled(BITTORRENT_SESSION_KEY("SSRFMitigation"), true)
      , m_blockPeersOnPrivilegedPorts(BITTORRENT_SESSION_KEY("BlockPeersOnPrivilegedPorts"), false)
-@@ -415,7 +415,7 @@
+@@ -412,7 +412,7 @@ Session::Session(QObject *parent)
+     , m_globalMaxRatio(BITTORRENT_SESSION_KEY("GlobalMaxRatio"), -1, [](qreal r) { return r < 0 ? -1. : r;})
+     , m_globalMaxSeedingMinutes(BITTORRENT_SESSION_KEY("GlobalMaxSeedingMinutes"), -1, lowerLimited(-1))
+     , m_isAddTorrentPaused(BITTORRENT_SESSION_KEY("AddTorrentPaused"), false)
 -    , m_torrentContentLayout(BITTORRENT_SESSION_KEY("TorrentContentLayout"), TorrentContentLayout::Original)
 +    , m_torrentContentLayout(BITTORRENT_SESSION_KEY("TorrentContentLayout"), TorrentContentLayout::Subfolder)
      , m_isAppendExtensionEnabled(BITTORRENT_SESSION_KEY("AddExtensionToIncompleteFiles"), false)
      , m_refreshInterval(BITTORRENT_SESSION_KEY("RefreshInterval"), 1500)
      , m_isPreallocationEnabled(BITTORRENT_SESSION_KEY("Preallocation"), false)
-     , m_torrentExportDirectory(BITTORRENT_SESSION_KEY("TorrentExportDirectory"))
-     , m_finishedTorrentExportDirectory(BITTORRENT_SESSION_KEY("FinishedTorrentExportDirectory"))
-     , m_globalDownloadSpeedLimit(BITTORRENT_SESSION_KEY("GlobalDLSpeedLimit"), 0, lowerLimited(0))
-@@ -1220,7 +1220,7 @@
+@@ -1220,7 +1220,7 @@ void Session::loadLTSettings(lt::settings_pack &settingsPack)
  
      // The most secure, rc4 only so that all streams are encrypted
      settingsPack.set_int(lt::settings_pack::allowed_enc_level, lt::settings_pack::pe_rc4);
