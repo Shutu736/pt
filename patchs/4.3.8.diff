@@ -107,4 +107,3 @@ index 19aad68680..5a99c789d9 100644
      switch (encryption())
      {
      case 0: // Enabled
- Login with GitHub
