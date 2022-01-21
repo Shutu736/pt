@@ -5,6 +5,7 @@
 # Date:                 2022-1-22
 # Description:          Debian11 专用一键脚本
 
+# 获取变量
 username=$1
 password=$2
 domain=$3
@@ -22,12 +23,11 @@ fi
 echo -e "\033[36m ================= 安装依赖并设置时区 ================= \033[0m"
 # apt
 apt-get update && apt-get install vim nano sysstat vnstat nginx -y
-
 # set timezone
 timedatectl set-timezone Asia/Shanghai
 
-# qb install
 echo -e "\033[36m ================= qb-nox安装 ================= \033[0m"
+# qb install
 source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh)
 # source ./qb-nox-static.sh
 
@@ -36,6 +36,7 @@ echo $qb_version
 systemctl start $qb_version@$username
 systemctl enable $qb_version@$username
 
+# acme nginx
 if [[ ! -d "/etc/nginx/ssl" ]]; then
   echo -e "\033[36m ================= 域名申请配置 ================= \033[0m"
   # acme
