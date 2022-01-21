@@ -9,6 +9,7 @@
 username=$1
 password=$2
 domain=$3
+echo /home/$username
 
 if [[ ! -d "/home/$username" ]]; then
   echo -e "\033[36m ================= 创建用户 ================= \033[0m"
