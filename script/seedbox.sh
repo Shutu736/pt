@@ -10,7 +10,7 @@ username=$1
 password=$2
 domain=$3
 
-if [[ ! -d "/home/shutu" ]]; then
+if [[ ! -d "/home/$username" ]]; then
   echo -e "\033[36m ================= 创建用户 ================= \033[0m"
   pass=$(perl -e 'print crypt($ARGV[0], "password")' $password)
   echo -e "\033[35m 用户名: $username \033[0m"
