@@ -61,9 +61,9 @@ mkdir /etc/nginx/ssl && ~/.acme.sh/acme.sh --install-cert -d $domain \
   --reloadcmd     "service nginx force-reload" 
 
 # nginx
-echo "server {  
+echo 'server {  
     listen  80;
-    server_name $domain;
+    server_name domain.com;
       
     rewrite ^(.*)$  https://$host$1 permanent; 
 }
@@ -75,7 +75,7 @@ server {
     index index.html index.htm;
 
     ssl_certificate /etc/nginx/ssl/fullchain.cer;
-    ssl_certificate_key /etc/nginx/ssl/$domain.key;
+    ssl_certificate_key /etc/nginx/ssl/domain.com.key;
     ssl_session_timeout 5m;
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # TLS
     ssl_session_cache builtin:1000 shared:SSL:10m;
@@ -87,8 +87,12 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
-}" > /etc/nginx/conf.d/$domain.conf
+}' > /etc/nginx/conf.d/$domain.conf
+# conf中的$domain替换为域名
+sed -i "s/domain.com/${domain}/g" /etc/nginx/conf.d/$domain.conf
+
 nginx -s reload
+
 echo -e "\033[32m ================================ \033[0m"
 echo -e "\033[32m ========== 域名申请成功 ========== \033[0m"
 echo -e "\033[32m ================================ \033[0m"
