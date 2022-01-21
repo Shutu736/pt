@@ -1,12 +1,16 @@
 #! /bin/sh
+# Author:               Shutu
+# Version:              1.0
+# Mail:                 shutu736@gmail.com
+# Date:                 2022-1-22
+# Description:          栗山未来大佬原创
 
 versions[0]=qb-nox-static-419-lt1114
 versions[1]=qb-nox-static-438-lt1214
 j=2
 
-for ((i=0; i<j; i++))
-do
-echo -e "\033[35m ${i}) ${versions[$i]}\033[0m"
+for ((i = 0; i < j; i++)); do
+  echo -e "\033[35m ${i}) ${versions[$i]}\033[0m"
 done
 echo -n 'select version: '
 read num
@@ -26,7 +30,7 @@ LimitNOFILE=100000
 ExecStart=/usr/bin/${versions[$num]}
 
 [Install]
-WantedBy=multi-user.target" > /etc/systemd/system/${versions[$num]}@.service
+WantedBy=multi-user.target" >/etc/systemd/system/${versions[$num]}@.service
 echo -e "start command: \033[35msystemctl start ${versions[$num]}@username\033[0m"
 echo -e "stop command: \033[35msystemctl stop ${versions[$num]}@username\033[0m"
 echo -e "restart command: \033[35msystemctl restart ${versions[$num]}@username\033[0m"
