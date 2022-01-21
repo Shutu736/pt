@@ -13,6 +13,7 @@ read num
 echo -ne "install \033[35m${versions[$num]}\033[0m , press Ctrl + C to exit."
 read
 wget -O "/usr/bin/${versions[$num]}" "https://github.com/Shutu736/pt/raw/master/qb-nox/${versions[$num]}" && chmod +x "/usr/bin/${versions[$num]}"
+qb_version=${versions[$num]}
 echo "[Unit]
 Description=${versions[$num]}
 After=network.target
