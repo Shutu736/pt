@@ -64,7 +64,7 @@ if [[ ! -d "/etc/nginx/ssl" ]]; then
 
   server {
       listen 443 ssl;
-      server_name docs.lvrui.io;
+      server_name domain.com;
 
       index index.html index.htm;
 
