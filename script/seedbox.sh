@@ -9,7 +9,10 @@
 username=$1
 password=$2
 domain=$3
-echo /home/$username
+dns_type=$4
+dns_id=$5
+dns_key=$6
+
 
 if [[ ! -d "/home/$username" ]]; then
   echo -e "\033[36m ================= 创建用户 ================= \033[0m"
@@ -38,54 +41,64 @@ systemctl start $qb_version@$username
 systemctl enable $qb_version@$username
 
 # acme nginx
-if [[ ! -d "/etc/nginx/ssl" ]]; then
+# 判断是否需要域名申请
+if [ $dns_type ]; then
   echo -e "\033[36m ================= 域名申请配置 ================= \033[0m"
   # acme
   cd ~ && curl https://get.acme.sh | sh -s email=shutu736@gmail.com
+  if [ $dns_id ] && [ $dns_key ]; then
+    if [ "$dns_type" == "dns_dp"]; then
+      export DP_Id=$dns_id && export DP_Key=$dns_key &&
+      ~/.acme.sh/acme.sh --issue \
+        --dns dns_dp \
+        -d $domain \
+        --server letsencrypt
+    else
+      export Ali_Key=$dns_id && export Ali_Secret=$dns_key &&
+      ~/.acme.sh/acme.sh --issue \
+        --dns dns_ali \
+        -d $domain \
+        --server letsencrypt
+    fi
 
-  export DP_Id="271440" && export DP_Key="6c86399fc719f021ff91f3690bc98588" &&
-    ~/.acme.sh/acme.sh --issue \
-      --dns dns_dp \
-      -d $domain \
-      --server letsencrypt
+    mkdir /etc/nginx/ssl && ~/.acme.sh/acme.sh --install-cert -d $domain \
+      --key-file /etc/nginx/ssl/$domain.key \
+      --fullchain-file /etc/nginx/ssl/fullchain.cer \
+      --reloadcmd "service nginx force-reload"
 
-  mkdir /etc/nginx/ssl && ~/.acme.sh/acme.sh --install-cert -d $domain \
-    --key-file /etc/nginx/ssl/$domain.key \
-    --fullchain-file /etc/nginx/ssl/fullchain.cer \
-    --reloadcmd "service nginx force-reload"
+    # nginx
+    echo 'server {  
+        listen  80;
+        server_name domain.com;
+          
+        rewrite ^(.*)$  https://$host$1 permanent; 
+    }
 
-  # nginx
-  echo 'server {  
-      listen  80;
-      server_name domain.com;
-        
-      rewrite ^(.*)$  https://$host$1 permanent; 
-  }
+    server {
+        listen 443 ssl;
+        server_name domain.com;
 
-  server {
-      listen 443 ssl;
-      server_name domain.com;
+        index index.html index.htm;
 
-      index index.html index.htm;
+        ssl_certificate /etc/nginx/ssl/fullchain.cer;
+        ssl_certificate_key /etc/nginx/ssl/domain.com.key;
+        ssl_session_timeout 5m;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # TLS
+        ssl_session_cache builtin:1000 shared:SSL:10m;
 
-      ssl_certificate /etc/nginx/ssl/fullchain.cer;
-      ssl_certificate_key /etc/nginx/ssl/domain.com.key;
-      ssl_session_timeout 5m;
-      ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # TLS
-      ssl_session_cache builtin:1000 shared:SSL:10m;
+        error_page 404 /404.html;
+        location / {
+            proxy_pass http://127.0.0.1:8080/;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }' >/etc/nginx/conf.d/$domain.conf
+    # conf中的$domain替换为域名
+    sed -i "s/domain.com/${domain}/g" /etc/nginx/conf.d/$domain.conf
 
-      error_page 404 /404.html;
-      location / {
-          proxy_pass http://127.0.0.1:8080/;
-          proxy_set_header Host $http_host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      }
-  }' >/etc/nginx/conf.d/$domain.conf
-  # conf中的$domain替换为域名
-  sed -i "s/domain.com/${domain}/g" /etc/nginx/conf.d/$domain.conf
-
-  nginx -s reload
+    nginx -s reload
+  fi
 fi
 
 echo -e "\033[36m ================= 安装成功 ================= \033[0m"

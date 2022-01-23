@@ -2,7 +2,7 @@
 
 ```bash
 wget https://raw.githubusercontent.com/Shutu736/pt/master/script/seedbox.sh && chmod +x seedbox.sh
-./seedbox.sh <username> <password> <domain>
+./seedbox.sh <username> <password> <domain> <dns_type> <dns_id> <dns_key>
 ```
 
 ## 删除 qb
