@@ -1,8 +1,21 @@
 ## 安装
 
+### 腾讯云
+
 ```bash
-wget https://raw.githubusercontent.com/Shutu736/pt/master/script/seedbox.sh && chmod +x seedbox.sh
-./seedbox.sh <username> <password> <domain> <dns_type> <dns_id> <dns_key>
+bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/seedbox.sh") \
+  --username username --password password \
+  --domain domain.com \
+  --dns_type dns_dp --dns_id xxxx --dns_key xxxx
+```
+
+### 阿里云
+
+```bash
+bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/seedbox.sh") \
+  --username username --password password \
+  --domain domain.com \
+  --dns_type dns_ali --dns_key xxxx --dns_secret xxxx
 ```
 
 ## 删除 qb
