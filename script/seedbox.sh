@@ -2,18 +2,21 @@
 # Author:               Shutu
 # Version:              1.0
 # Mail:                 shutu736@gmail.com
-# Date:                 2022-1-22
+# Date:                 2022-1-23
 # Description:          Debian11 专用一键脚本
 
 # 获取变量
-username=$1
-password=$2
-domain=$3
-dns_type=$4
-dns_id=$5
-dns_key=$6
+# username=$1
+# password=$2
+# domain=$3
+# dns_type=$4
+# dns_id=$5
+# dns_key=$6
 
+# options
+source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/options.sh)
 
+# create user
 if [[ ! -d "/home/$username" ]]; then
   echo -e "\033[36m ================= 创建用户 ================= \033[0m"
   pass=$(perl -e 'print crypt($ARGV[0], "password")' $password)
@@ -24,14 +27,15 @@ if [[ ! -d "/home/$username" ]]; then
   mkdir /home/$username/Downloads && chmod -R 777 /home/$username/Downloads
 fi
 
+# apt install
 echo -e "\033[36m ================= 安装依赖并设置时区 ================= \033[0m"
 # apt
 apt-get update && apt-get install vim nano sysstat vnstat nginx -y
 # set timezone
 timedatectl set-timezone Asia/Shanghai
 
-echo -e "\033[36m ================= qb-nox安装 ================= \033[0m"
 # qb install
+echo -e "\033[36m ================= qb-nox安装 ================= \033[0m"
 source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh)
 # source ./qb-nox-static.sh
 
