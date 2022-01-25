@@ -16,8 +16,8 @@ if [[ ! -f "/usr/bin/qb-nox-static-438-lt1214" ]]; then
   rm -rf /usr/bin/qb-nox-static-419-lt1114
   systemctl disable qb-nox-static-419-lt1114@$username
   rm -rf /home/$username/.config/qBittorrent/
-  rm -rf /home/$username/.local/share/data/qBittorrent/
-  rm -rf /home/$username/.cache/qBittorrent
+  rm -rf /home/$username/.local/
+  rm -rf /home/$username/.cache/qBittorrent/
 else
   # 4.3.8
   echo -e "\033[36m ================= 删除qb-nox 4.3.8 ================= \033[0m"
@@ -26,6 +26,6 @@ else
   rm -rf /usr/bin/qb-nox-static-438-lt1214
   systemctl disable qb-nox-static-438-lt1214@$username
   rm -rf /home/$username/.config/qBittorrent/
-  rm -rf /home/$username/.local/share/data/qBittorrent/
+  rm -rf /home/$username/.local/share/
   rm -rf /home/$username/.cache/qBittorrent/
 fi
