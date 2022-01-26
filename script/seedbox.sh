@@ -58,7 +58,7 @@ if [ $dns_type ]; then
   echo -e "\033[36m ================= 域名申请配置 ================= \033[0m"
   # acme
   cd ~ && curl https://get.acme.sh | sh -s email=shutu736@gmail.com
-  if [ "$dns_type" == "dns_dp"]; then
+  if [ "$dns_type" == "dns_dp" ]; then
     export DP_Id=$dns_id && export DP_Key=$dns_key &&
     ~/.acme.sh/acme.sh --issue \
       --dns dns_dp \
