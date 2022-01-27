@@ -6,7 +6,8 @@
 # Description:          栗山未来大佬原创
 
 versions[0]=qb-nox-static-419-lt1114
-versions[1]=qb-nox-static-438-lt1214
+versions[1]=qb-nox-static-419-lt1114-nvme
+versions[2]=qb-nox-static-438-lt1214
 j=2
 
 for ((i = 0; i < j; i++)); do
