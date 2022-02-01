@@ -5,11 +5,7 @@
 # Date:                 2022-1-22
 # Description:          栗山未来大佬原创
 
-username=$1
-password=$2
-
 versions[0]=qb-nox-static-419-lt1114
-versions[1]=qb-nox-static-419-lt1114-nvme
 versions[2]=qb-nox-static-438-lt1214
 j=3
 
@@ -43,8 +39,11 @@ systemctl enable ${versions[$num]}@$username
 
 systemctl stop ${versions[$num]}@$username
 
-md5password=$(echo -n $password | md5sum | awk '{print $1}')
-cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
+if [[ "${versions[$num]}" =~ "qb-nox-static-419-lt1114" ]]; then
+  
+
+  md5password=$(echo -n $password | md5sum | awk '{print $1}')
+  cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
 [LegalNotice]
 Accepted=true
 
@@ -55,7 +54,6 @@ Cookies=@Invalid()
 Connection\PortRangeMin=28888
 General\Locale=zh
 General\UseRandomPort=false
-Downloads\DiskWriteCacheSize=$Cache2
 Downloads\SavePath=/home/$username/Downloads/
 Queueing\QueueingEnabled=false
 WebUI\Password_ha1=@ByteArray($md5password)
@@ -63,11 +61,25 @@ WebUI\Port=8080
 WebUI\Username=$username
 WebUI\CSRFProtection=false
 EOF
-
+else
+  wget https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x $HOME/qb_password_gen
+  PBKDF2password=$(/home/$username/qb_password_gen $password)
+  cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
+[LegalNotice]
+Accepted=true
+[Network]
+Cookies=@Invalid()
+[Preferences]
+Connection\PortRangeMin=28888
+General\Locale=zh
+General\UseRandomPort=false
+Downloads\SavePath=/home/$username/Downloads/
+Queueing\QueueingEnabled=false
+WebUI\Password_PBKDF2="@ByteArray($PBKDF2password)"
+WebUI\Port=8080
+WebUI\Username=$username
+WebUI\CSRFProtection=false
+EOF
+  rm /home/$username/qb_password_gen
+fi
 systemctl start ${versions[$num]}@$username
-
-# echo -e "start command: \033[35msystemctl start ${versions[$num]}@username\033[0m"
-# echo -e "stop command: \033[35msystemctl stop ${versions[$num]}@username\033[0m"
-# echo -e "restart command: \033[35msystemctl restart ${versions[$num]}@username\033[0m"
-# echo -e "set start at boot: \033[35msystemctl enable ${versions[$num]}@username\033[0m"
-# echo -e "unset start at boot: \033[35msystemctl disable ${versions[$num]}@username\033[0m"

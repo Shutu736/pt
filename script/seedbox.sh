@@ -32,7 +32,6 @@ if [[ ! -d "/home/$username" ]]; then
   echo -e "\033[35m 密码: $password \033[0m"
   # create user
   groupadd $username && useradd -m $username -p $pass -g $username -s /bin/bash -d /home/$username
-  mkdir /home/$username/Downloads && chmod -R 777 /home/$username/Downloads
 fi
 
 # apt install
@@ -48,8 +47,8 @@ source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/q
 
 # qb systemctl
 echo $qb_version
-systemctl start $qb_version@$username
-systemctl enable $qb_version@$username
+# systemctl start $qb_version@$username
+# systemctl enable $qb_version@$username
 
 # acme nginx
 # 判断是否需要域名申请
