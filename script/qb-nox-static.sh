@@ -19,6 +19,7 @@ echo -ne "install \033[35m${versions[$num]}\033[0m , press Ctrl + C to exit."
 read
 if [ $username ]; then
   mkdir -p /home/$username/.config/qBittorrent && chmod -R 777 /home/$username/.config/qBittorrent
+   mkdir -p /home/$username/.config/qBittorrent/rss && chmod -R 777 /home/$username/.config/qBittorrent/rss
   touch /home/$username/.config/qBittorrent/qBittorrent.conf
   if [[ "${version}" =~ "4.1." ]]; then
     md5password=$(echo -n $password | md5sum | awk '{print $1}')
