@@ -43,25 +43,6 @@ apt-get update && apt-get install vim nano sysstat vnstat nginx -y
 timedatectl set-timezone Asia/Shanghai
 
 # qb install
-echo -e "\033[36m ================= qb配置文件写入 ================= \033[0m"
-if [[ "${version}" =~ "4.1." ]]; then
-  md5password=$(echo -n $password | md5sum | awk '{print $1}')
-  echo $md5password
-  cat << EOF > /home/$username/.config/qBittorrent/qBittorrent.conf
-[LegalNotice]
-Accepted=true
-[Network]
-Cookies=@Invalid()
-[Preferences]
-Connection\PortRangeMin=$port
-Downloads\DiskWriteCacheSize=$cache
-Downloads\SavePath=$HOME/qbittorrent/Downloads/
-Queueing\QueueingEnabled=false
-WebUI\Password_ha1=@ByteArray($md5password)
-WebUI\Port=$qbport
-WebUI\Username=$username
-EOF
-fi
 echo -e "\033[36m ================= qb-nox安装 ================= \033[0m"
 source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh)
 

@@ -17,6 +17,29 @@ echo -n 'select version: '
 read num
 echo -ne "install \033[35m${versions[$num]}\033[0m , press Ctrl + C to exit."
 read
+if [ $password ]; then
+  mkdir -p /home/$username/.config/qBittorrent/ && chmod -R 777 /home/$username/.config/qBittorrent/
+  mkdir -p /home/$username/qbittorrent/Downloads/ && chmod -R 777 /home/$username/Downloads/
+  touch /home/$username/.config/qBittorrent/qBittorrent.conf
+  if [[ "${version}" =~ "4.1." ]]; then
+    md5password=$(echo -n $password | md5sum | awk '{print $1}')
+    echo $md5password
+    cat << EOF > /home/$username/.config/qBittorrent/qBittorrent.conf
+    [LegalNotice]
+    Accepted=true
+    [Network]
+    Cookies=@Invalid()
+    [Preferences]
+    Connection\PortRangeMin=$port
+    Downloads\DiskWriteCacheSize=$cache
+    Downloads\SavePath=$HOME/qbittorrent/Downloads/
+    Queueing\QueueingEnabled=false
+    WebUI\Password_ha1=@ByteArray($md5password)
+    WebUI\Port=$qbport
+    WebUI\Username=$username
+EOF
+  fi
+fi
 wget -O "/usr/bin/${versions[$num]}" "https://github.com/Shutu736/pt/raw/master/qb-nox/${versions[$num]}" && chmod +x "/usr/bin/${versions[$num]}"
 qb_version=${versions[$num]}
 echo "[Unit]
