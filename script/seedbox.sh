@@ -43,6 +43,25 @@ apt-get update && apt-get install vim nano sysstat vnstat nginx -y
 timedatectl set-timezone Asia/Shanghai
 
 # qb install
+echo -e "\033[36m ================= qb配置文件写入 ================= \033[0m"
+if [[ "${version}" =~ "4.1." ]]; then
+  md5password=$(echo -n $password | md5sum | awk '{print $1}')
+  echo $md5password
+  cat << EOF > /home/$username/.config/qBittorrent/qBittorrent.conf
+[LegalNotice]
+Accepted=true
+[Network]
+Cookies=@Invalid()
+[Preferences]
+Connection\PortRangeMin=$port
+Downloads\DiskWriteCacheSize=$cache
+Downloads\SavePath=$HOME/qbittorrent/Downloads/
+Queueing\QueueingEnabled=false
+WebUI\Password_ha1=@ByteArray($md5password)
+WebUI\Port=$qbport
+WebUI\Username=$username
+EOF
+fi
 echo -e "\033[36m ================= qb-nox安装 ================= \033[0m"
 source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh)
 
@@ -50,69 +69,6 @@ source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/q
 echo $qb_version
 systemctl start $qb_version@$username
 systemctl enable $qb_version@$username
-
-echo -e "\033[36m ================= qb配置文件写入 ================= \033[0m"
-if [[ "${version}" =~ "4.1." ]]; then
-  md5password=$(echo -n $password | md5sum | awk '{print $1}')
-  echo $md5password
-  cat << EOF > /home/$username/.config/qBittorrent/qBittorrent.conf
-[AutoRun]
-enabled=false
-program=
-[BitTorrent]
-Session\Categories=@Variant(\0\0\0\b\0\0\0\x1\0\0\0\b\0k\0\x65\0\x65\0p\0\0\0\n\0\0\0\0)
-Session\CreateTorrentSubfolder=true
-Session\DisableAutoTMMByDefault=true
-Session\DisableAutoTMMTriggers\CategoryChanged=false
-Session\DisableAutoTMMTriggers\CategorySavePathChanged=true
-Session\DisableAutoTMMTriggers\DefaultSavePathChanged=true
-[LegalNotice]
-Accepted=true
-[Network]
-Cookies=@Invalid()
-[Preferences]
-[Preferences]
-Bittorrent\AddTrackers=false
-Bittorrent\MaxRatioAction=0
-Bittorrent\PeX=false
-Connection\GlobalDLLimitAlt=10
-Connection\GlobalUPLimitAlt=10
-Connection\PortRangeMin=28888
-Downloads\PreAllocation=false
-Downloads\ScanDirsV2=@Variant(\0\0\0\x1c\0\0\0\0)
-Downloads\StartInPause=false
-DynDNS\DomainName=changeme.dyndns.org
-DynDNS\Enabled=false
-DynDNS\Password=
-DynDNS\Service=0
-DynDNS\Username=
-General\Locale=zh
-General\UseRandomPort=false
-MailNotification\email=
-MailNotification\enabled=false
-MailNotification\password=$password
-MailNotification\req_auth=true
-MailNotification\req_ssl=false
-MailNotification\sender=qBittorrent_notification@example.com
-MailNotification\smtp_server=smtp.changeme.com
-MailNotification\username=$username
-WebUI\Address=*
-WebUI\AlternativeUIEnabled=false
-WebUI\AuthSubnetWhitelist=@Invalid()
-WebUI\AuthSubnetWhitelistEnabled=false
-WebUI\CSRFProtection=false
-WebUI\ClickjackingProtection=false
-WebUI\HTTPS\Enabled=false
-WebUI\HostHeaderValidation=false
-WebUI\LocalHostAuth=true
-WebUI\Password_ha1=@ByteArray($md5password)
-WebUI\Port=8080
-WebUI\RootFolder=
-WebUI\ServerDomains=*
-WebUI\UseUPnP=true
-WebUI\Username=$username
-EOF
-fi
 
 # acme nginx
 # 判断是否需要域名申请
