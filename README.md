@@ -18,6 +18,12 @@ bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/se
   --dns_type dns_ali --dns_key xxxx --dns_secret xxxx
 ```
 
+## 安装 qb
+
+```bash
+bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh") username password
+```
+
 ## 删除 qb
 
 ```bash

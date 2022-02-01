@@ -28,17 +28,15 @@ done
 if [[ ! -d "/home/$username" ]]; then
   echo -e "\033[36m ================= 创建用户 ================= \033[0m"
   pass=$(perl -e 'print crypt($ARGV[0], "password")' $password)
-  echo -e "\033[35m 用户名: $username \033[0m"
-  echo -e "\033[35m 密码: $password \033[0m"
+  
   # create user
   groupadd $username && useradd -m $username -p $pass -g $username -s /bin/bash -d /home/$username
-  mkdir /home/$username/Downloads && chmod -R 777 /home/$username/Downloads
 fi
 
 # apt install
 echo -e "\033[36m ================= 安装依赖并设置时区 ================= \033[0m"
 # apt
-apt-get update && apt-get install vim nano sysstat vnstat nginx -y
+apt-get update && apt-get install vim nano sysstat vnstat -y
 # set timezone
 timedatectl set-timezone Asia/Shanghai
 
@@ -48,13 +46,13 @@ source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/q
 
 # qb systemctl
 echo $qb_version
-systemctl start $qb_version@$username
-systemctl enable $qb_version@$username
 
 # acme nginx
 # 判断是否需要域名申请
 if [ $dns_type ]; then
   echo -e "\033[36m ================= 域名申请配置 ================= \033[0m"
+  # nginx
+  apt-get install nginx -y
   # acme
   cd ~ && curl https://get.acme.sh | sh -s email=shutu736@gmail.com
   if [ "$dns_type" == "dns_dp" ]; then
@@ -83,19 +81,15 @@ if [ $dns_type ]; then
         
       rewrite ^(.*)$  https://$host$1 permanent; 
   }
-
   server {
       listen 443 ssl;
       server_name domain.com;
-
       index index.html index.htm;
-
       ssl_certificate /etc/nginx/ssl/fullchain.cer;
       ssl_certificate_key /etc/nginx/ssl/domain.com.key;
       ssl_session_timeout 5m;
       ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # TLS
       ssl_session_cache builtin:1000 shared:SSL:10m;
-
       error_page 404 /404.html;
       location / {
           proxy_pass http://127.0.0.1:8080/;
@@ -111,3 +105,9 @@ if [ $dns_type ]; then
 fi
 
 echo -e "\033[36m ================= 安装成功 ================= \033[0m"
+if [ $domain ]; then
+  echo -e "\033[35m 网址: https://$domain/ \033[0m"
+fi
+echo -e "\033[35m 用户名: $username \033[0m"
+echo -e "\033[35m 密码: $password \033[0m"
+echo -e "\033[36m =========================================== \033[0m"
