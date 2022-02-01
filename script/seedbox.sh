@@ -45,7 +45,11 @@ timedatectl set-timezone Asia/Shanghai
 # qb install
 echo -e "\033[36m ================= qb-nox安装 ================= \033[0m"
 source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh)
-# source ./qb-nox-static.sh
+
+# qb systemctl
+echo $qb_version
+systemctl start $qb_version@$username
+systemctl enable $qb_version@$username
 
 mkdir -p /home/$username/.config/qBittorrent
 mkdir /home/$username/.config/qBittorrent/rss && chmod -R 777 /home/$username/.config/qBittorrent/rss
@@ -111,11 +115,6 @@ WebUI\UseUPnP=true
 WebUI\Username=$username
 EOF
 fi
-
-# qb systemctl
-echo $qb_version
-systemctl start $qb_version@$username
-systemctl enable $qb_version@$username
 
 # acme nginx
 # 判断是否需要域名申请
