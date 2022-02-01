@@ -21,19 +21,17 @@ wget -O "/usr/bin/${versions[$num]}" "https://github.com/Shutu736/pt/raw/master/
 qb_version=${versions[$num]}
 echo "[Unit]
 Description=${versions[$num]}
-Wants=network-online.target
-After=network-online.target nss-lookup.target
-
+After=network.target
 [Service]
-Type=exec
-Restart=on-failure
-SyslogIdentifier=qbittorrent-nox
+User=%I
+Type=simple
+RemainAfterExit=yes
+LimitNOFILE=100000
 ExecStart=/usr/bin/${versions[$num]}
-
 [Install]
-WantedBy=default.target" >/etc/systemd/system/${versions[$num]}.service
-echo -e "start command: \033[35msystemctl --user start ${versions[$num]}\033[0m"
-echo -e "stop command: \033[35msystemctl --user stop ${versions[$num]}\033[0m"
-echo -e "restart command: \033[35msystemctl --user restart ${versions[$num]}\033[0m"
-echo -e "set start at boot: \033[35msystemctl --user enable --now ${versions[$num]}\033[0m"
-echo -e "unset start at boot: \033[35msystemctl --user disable ${versions[$num]}\033[0m"
+WantedBy=multi-user.target" >/etc/systemd/system/${versions[$num]}@.service
+echo -e "start command: \033[35msystemctl start ${versions[$num]}@username\033[0m"
+echo -e "stop command: \033[35msystemctl stop ${versions[$num]}@username\033[0m"
+echo -e "restart command: \033[35msystemctl restart ${versions[$num]}@username\033[0m"
+echo -e "set start at boot: \033[35msystemctl enable ${versions[$num]}@username\033[0m"
+echo -e "unset start at boot: \033[35msystemctl disable ${versions[$num]}@username\033[0m"

@@ -48,8 +48,8 @@ source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/q
 
 # qb systemctl
 echo $qb_version
-# systemctl start $qb_version@$username
-# systemctl enable $qb_version@$username
+systemctl start $qb_version@$username
+systemctl enable $qb_version@$username
 
 # acme nginx
 # 判断是否需要域名申请
