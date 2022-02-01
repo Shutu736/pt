@@ -5,6 +5,11 @@
 # Date:                 2022-1-22
 # Description:          栗山未来大佬原创
 
+if [ ! $username ]; then
+  username=$1
+  password=$2
+fi
+
 versions[0]=qb-nox-static-419-lt1114
 versions[2]=qb-nox-static-438-lt1214
 j=3
