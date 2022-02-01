@@ -17,6 +17,76 @@ echo -n 'select version: '
 read num
 echo -ne "install \033[35m${versions[$num]}\033[0m , press Ctrl + C to exit."
 read
+if [ $username ]; then
+  mkdir -p /home/$username/.config/qBittorrent && chmod -R 777 /home/$username/.config/qBittorrent
+  touch /home/$username/.config/qBittorrent/qBittorrent.conf
+  if [[ "${version}" =~ "4.1." ]]; then
+    md5password=$(echo -n $password | md5sum | awk '{print $1}')
+        cat << EOF >$HOME/.config/qBittorrent/qBittorrent.conf
+[LegalNotice]
+[AutoRun]
+enabled=false
+program=
+
+[BitTorrent]
+Session\Categories=@Variant(\0\0\0\b\0\0\0\x3\0\0\0\xe\0o\0u\0r\0\x62\0i\0t\0s\0\0\0\n\0\0\0\0\0\0\0\n\0h\0\x64\0s\0k\0y\0\0\0\n\0\0\0\0\0\0\0\n\0h\0\x61\0r\0\x65\0s\0\0\0\n\0\0\0\0)
+Session\CreateTorrentSubfolder=true
+Session\DisableAutoTMMByDefault=true
+Session\DisableAutoTMMTriggers\CategoryChanged=false
+Session\DisableAutoTMMTriggers\CategorySavePathChanged=true
+Session\DisableAutoTMMTriggers\DefaultSavePathChanged=true
+
+[Core]
+AutoDeleteAddedTorrentFile=Never
+
+[Network]
+Cookies=@Invalid()
+
+[Preferences]
+Bittorrent\AddTrackers=false
+Bittorrent\MaxRatioAction=0
+Bittorrent\PeX=false
+Connection\GlobalDLLimitAlt=10
+Connection\GlobalUPLimitAlt=10
+Connection\PortRangeMin=28888
+Downloads\PreAllocation=false
+Downloads\ScanDirsV2=@Variant(\0\0\0\x1c\0\0\0\0)
+Downloads\StartInPause=false
+DynDNS\DomainName=changeme.dyndns.org
+DynDNS\Enabled=false
+DynDNS\Password=
+DynDNS\Service=0
+DynDNS\Username=
+General\Locale=zh
+General\UseRandomPort=false
+MailNotification\email=
+MailNotification\enabled=false
+MailNotification\password=$password
+MailNotification\req_auth=true
+MailNotification\req_ssl=false
+MailNotification\sender=qBittorrent_notification@example.com
+MailNotification\smtp_server=smtp.changeme.com
+MailNotification\username=$username
+WebUI\Address=*
+WebUI\AlternativeUIEnabled=false
+WebUI\AuthSubnetWhitelist=@Invalid()
+WebUI\AuthSubnetWhitelistEnabled=false
+WebUI\CSRFProtection=false
+WebUI\ClickjackingProtection=false
+WebUI\HTTPS\Enabled=false
+WebUI\HostHeaderValidation=false
+WebUI\LocalHostAuth=true
+WebUI\Password_ha1=@ByteArray($md5password)
+WebUI\Port=8080
+WebUI\RootFolder=
+WebUI\ServerDomains=*
+WebUI\UseUPnP=true
+WebUI\Username=$username
+EOF
+  fi
+fi
+
+fi
 wget -O "/usr/bin/${versions[$num]}" "https://github.com/Shutu736/pt/raw/master/qb-nox/${versions[$num]}" && chmod +x "/usr/bin/${versions[$num]}"
 qb_version=${versions[$num]}
 echo "[Unit]
