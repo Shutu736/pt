@@ -31,15 +31,3 @@ if [[ -f "/usr/bin/qb-nox-static-419-lt1114" ]]; then
   rm -rf /home/$username/.local/
   rm -rf /home/$username/.cache/qBittorrent/
 fi
-
-if [[ -f "/usr/bin/qb-nox-static-419-lt1114-nvme" ]]; then
-  # 4.1.9 nvme
-  echo -e "\033[36m ================= 删除qb-nox 4.1.9 ================= \033[0m"
-  systemctl stop qb-nox-static-419-lt1114-nvme@$username
-  rm -rf /etc/systemd/system/qb-nox-static-419-lt1114-nvme@.service
-  rm -rf /usr/bin/qb-nox-static-419-lt1114-nvme
-  systemctl disable qb-nox-static-419-lt1114-nvme@$username
-  rm -rf /home/$username/.config/qBittorrent/
-  rm -rf /home/$username/.local/
-  rm -rf /home/$username/.cache/qBittorrent/
-fi
