@@ -52,13 +52,16 @@ Accepted=true
 Cookies=@Invalid()
 
 [Preferences]
-Connection\PortRangeMin=45000
+Connection\PortRangeMin=28888
+General\Locale=zh
+General\UseRandomPort=false
 Downloads\DiskWriteCacheSize=$Cache2
-Downloads\SavePath=/home/$username/qbittorrent/Downloads/
+Downloads\SavePath=/home/$username/Downloads/
 Queueing\QueueingEnabled=false
 WebUI\Password_ha1=@ByteArray($md5password)
 WebUI\Port=8080
 WebUI\Username=$username
+WebUI\CSRFProtection=false
 EOF
 
 systemctl start ${versions[$num]}@$username
