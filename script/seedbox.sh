@@ -51,9 +51,7 @@ echo $qb_version
 systemctl start $qb_version@$username
 systemctl enable $qb_version@$username
 
-mkdir -p /home/$username/.config/qBittorrent
-mkdir /home/$username/.config/qBittorrent/rss && chmod -R 777 /home/$username/.config/qBittorrent/rss
-touch /home/$username/.config/qBittorrent/qBittorrent.conf
+echo -e "\033[36m ================= qb配置文件写入 ================= \033[0m"
 if [[ "${version}" =~ "4.1." ]]; then
   md5password=$(echo -n $password | md5sum | awk '{print $1}')
   echo $md5password
