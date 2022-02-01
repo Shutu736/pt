@@ -85,8 +85,6 @@ WebUI\Username=$username
 EOF
   fi
 fi
-
-fi
 wget -O "/usr/bin/${versions[$num]}" "https://github.com/Shutu736/pt/raw/master/qb-nox/${versions[$num]}" && chmod +x "/usr/bin/${versions[$num]}"
 qb_version=${versions[$num]}
 echo "[Unit]
