@@ -76,6 +76,7 @@ Cookies=@Invalid()
 Connection\PortRangeMin=28888
 General\Locale=zh
 General\UseRandomPort=false
+Downloads\PreAllocation=false
 Downloads\SavePath=/home/$username/Downloads/
 Queueing\QueueingEnabled=false
 WebUI\Password_PBKDF2="@ByteArray($PBKDF2password)"
