@@ -65,7 +65,7 @@ WebUI\Username=$username
 WebUI\CSRFProtection=false
 EOF
 else
-  /home/$username && wget https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x /home/$username/qb_password_gen
+  cd /home/$username && wget https://raw.githubusercontent.com/jerry048/Seedbox-Components/main/Torrent%20Clients/qBittorrent/qb_password_gen && chmod +x /home/$username/qb_password_gen
   PBKDF2password=$(/home/$username/qb_password_gen $password)
   cat << EOF >/home/$username/.config/qBittorrent/qBittorrent.conf
 [LegalNotice]
