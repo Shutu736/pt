@@ -1,5 +1,5 @@
 diff --git a/src/base/bittorrent/session.cpp b/src/base/bittorrent/session.cpp
-index 19aad68680..5a99c789d9 100644
+index 19aad686800..a3f7b866755 100644
 --- a/src/base/bittorrent/session.cpp
 +++ b/src/base/bittorrent/session.cpp
 @@ -349,20 +349,20 @@ Session *Session::m_instance = nullptr;
@@ -25,7 +25,7 @@ index 19aad68680..5a99c789d9 100644
 -    , m_diskCacheSize(BITTORRENT_SESSION_KEY("DiskCacheSize"), -1)
 -    , m_diskCacheTTL(BITTORRENT_SESSION_KEY("DiskCacheTTL"), 60)
 +    , m_checkingMemUsage(BITTORRENT_SESSION_KEY("CheckingMemUsageSize"), 2048)
-+    , m_diskCacheSize(BITTORRENT_SESSION_KEY("DiskCacheSize"), 12287)
++    , m_diskCacheSize(BITTORRENT_SESSION_KEY("DiskCacheSize"), 16384)
 +    , m_diskCacheTTL(BITTORRENT_SESSION_KEY("DiskCacheTTL"), 300)
      , m_useOSCache(BITTORRENT_SESSION_KEY("UseOSCache"), true)
  #ifdef Q_OS_WIN
@@ -89,15 +89,15 @@ index 19aad68680..5a99c789d9 100644
      , m_validateHTTPSTrackerCertificate(BITTORRENT_SESSION_KEY("ValidateHTTPSTrackerCertificate"), true)
      , m_SSRFMitigationEnabled(BITTORRENT_SESSION_KEY("SSRFMitigation"), true)
      , m_blockPeersOnPrivilegedPorts(BITTORRENT_SESSION_KEY("BlockPeersOnPrivilegedPorts"), false)
-@@ -412,7 +412,7 @@ Session::Session(QObject *parent)
-     , m_globalMaxRatio(BITTORRENT_SESSION_KEY("GlobalMaxRatio"), -1, [](qreal r) { return r < 0 ? -1. : r;})
-     , m_globalMaxSeedingMinutes(BITTORRENT_SESSION_KEY("GlobalMaxSeedingMinutes"), -1, lowerLimited(-1))
-     , m_isAddTorrentPaused(BITTORRENT_SESSION_KEY("AddTorrentPaused"), false)
--    , m_torrentContentLayout(BITTORRENT_SESSION_KEY("TorrentContentLayout"), TorrentContentLayout::Original)
-+    , m_torrentContentLayout(BITTORRENT_SESSION_KEY("TorrentContentLayout"), TorrentContentLayout::Subfolder)
+@@ -415,7 +415,7 @@ Session::Session(QObject *parent)
+     , m_torrentContentLayout(BITTORRENT_SESSION_KEY("TorrentContentLayout"), TorrentContentLayout::Original)
      , m_isAppendExtensionEnabled(BITTORRENT_SESSION_KEY("AddExtensionToIncompleteFiles"), false)
      , m_refreshInterval(BITTORRENT_SESSION_KEY("RefreshInterval"), 1500)
-     , m_isPreallocationEnabled(BITTORRENT_SESSION_KEY("Preallocation"), false)
+-    , m_isPreallocationEnabled(BITTORRENT_SESSION_KEY("Preallocation"), false)
++    , m_isPreallocationEnabled(BITTORRENT_SESSION_KEY("Preallocation"), true)
+     , m_torrentExportDirectory(BITTORRENT_SESSION_KEY("TorrentExportDirectory"))
+     , m_finishedTorrentExportDirectory(BITTORRENT_SESSION_KEY("FinishedTorrentExportDirectory"))
+     , m_globalDownloadSpeedLimit(BITTORRENT_SESSION_KEY("GlobalDLSpeedLimit"), 0, lowerLimited(0))
 @@ -1220,7 +1220,7 @@ void Session::loadLTSettings(lt::settings_pack &settingsPack)
  
      // The most secure, rc4 only so that all streams are encrypted
