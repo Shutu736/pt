@@ -21,7 +21,7 @@ bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/se
 ## 安装 qb
 
 ```bash
-bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh") username password
+bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh") <username> <password> <webport> <port>
 ```
 
 ## 删除 qb

@@ -8,6 +8,8 @@
 if [ ! $username ]; then
   username=$1
   password=$2
+  webprot=$3
+  port=$4
 fi
 
 versions[0]=qb-nox-static-419-lt1114
@@ -54,13 +56,13 @@ Accepted=true
 [Network]
 Cookies=@Invalid()
 [Preferences]
-Connection\PortRangeMin=28888
+Connection\PortRangeMin=$port
 General\Locale=zh
 General\UseRandomPort=false
 Downloads\SavePath=/home/$username/Downloads/
 Queueing\QueueingEnabled=false
 WebUI\Password_ha1=@ByteArray($md5password)
-WebUI\Port=8080
+WebUI\Port=$webport
 WebUI\Username=$username
 WebUI\CSRFProtection=false
 EOF
@@ -73,14 +75,14 @@ Accepted=true
 [Network]
 Cookies=@Invalid()
 [Preferences]
-Connection\PortRangeMin=28888
+Connection\PortRangeMin=$port
 General\Locale=zh
 General\UseRandomPort=false
 Downloads\PreAllocation=false
 Downloads\SavePath=/home/$username/Downloads/
 Queueing\QueueingEnabled=false
 WebUI\Password_PBKDF2="@ByteArray($PBKDF2password)"
-WebUI\Port=8080
+WebUI\Port=$webprot
 WebUI\Username=$username
 WebUI\CSRFProtection=false
 EOF
