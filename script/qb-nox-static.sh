@@ -12,6 +12,13 @@ if [ ! $username ]; then
   port=$4
 fi
 
+if [ ! $webport ]; then
+  webport=8080
+fi
+if [ ! $port ]; then
+  webport=28888
+fi
+
 versions[0]=qb-nox-static-419-lt1114
 versions[1]=qb-nox-static-438-lt1214
 j=2

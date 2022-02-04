@@ -26,13 +26,6 @@ do
   esac
 done
 
-if [ ! $webport ]; then
-  webport=8080
-fi
-if [ ! $port ]; then
-  webport=28888
-fi
-
 # create user
 if [[ ! -d "/home/$username" ]]; then
   echo -e "\033[36m ================= 创建用户 ================= \033[0m"
