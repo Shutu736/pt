@@ -27,10 +27,10 @@ do
 done
 
 if [ ! $webport ]; then
-  $webport=8080
+  webport=8080
 fi
 if [ ! $port ]; then
-  $webport=28888
+  webport=28888
 fi
 
 # create user
