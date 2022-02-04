@@ -46,9 +46,6 @@ timedatectl set-timezone Asia/Shanghai
 echo -e "\033[36m ================= qb-nox安装 ================= \033[0m"
 source <(wget -qO- https://raw.githubusercontent.com/Shutu736/pt/master/script/qb-nox-static.sh)
 
-# qb systemctl
-echo $qb_version
-
 # acme nginx
 # 判断是否需要域名申请
 if [ $dns_type ]; then
