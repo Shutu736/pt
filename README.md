@@ -6,6 +6,7 @@
 bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/seedbox.sh") \
   --username username --password password \
   --domain domain.com \
+  --webport 8080 --port 28888 \
   --dns_type dns_dp --dns_id xxxx --dns_key xxxx
 ```
 
@@ -15,6 +16,7 @@ bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/se
 bash <(wget -qO- "https://raw.githubusercontent.com/Shutu736/pt/master/script/seedbox.sh") \
   --username username --password password \
   --domain domain.com \
+  --webport 8080 --port 28888 \
   --dns_type dns_ali --dns_key xxxx --dns_secret xxxx
 ```
 
