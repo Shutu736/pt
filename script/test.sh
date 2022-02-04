@@ -1,4 +1,4 @@
-args=`getopt -o u:p:w:x:d:t:i:k:s: -al username:,password:,webport:,port,domain:,dns_type:,dns_id:,dns_key:,dns_secret: -n 'seedbox.sh' -- "$@"`
+args=`getopt -o u:p:w:x:d:t:i:k:s: -al username:,password:,webport:,port:,domain:,dns_type:,dns_id:,dns_key:,dns_secret: -n 'seedbox.sh' -- "$@"`
 eval set -- "$args"
 
 while [ -n "$1" ]
