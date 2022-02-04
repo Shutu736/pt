@@ -101,7 +101,7 @@ if [ $dns_type ]; then
       ssl_session_cache builtin:1000 shared:SSL:10m;
       error_page 404 /404.html;
       location / {
-          proxy_pass http://127.0.0.1:8080/;
+          proxy_pass http://127.0.0.1:webport/;
           proxy_set_header Host $http_host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -109,6 +109,7 @@ if [ $dns_type ]; then
   }' >/etc/nginx/conf.d/$domain.conf
   # conf中的$domain替换为域名
   sed -i "s/domain.com/${domain}/g" /etc/nginx/conf.d/$domain.conf
+  sed -i "s/webport/${webport}/g" /etc/nginx/conf.d/$domain.conf
 
   nginx -s reload
 fi
