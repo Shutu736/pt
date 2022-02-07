@@ -31,3 +31,15 @@ if [[ -f "/usr/bin/qb-nox-static-419-lt1114" ]]; then
   rm -rf /home/$username/.local/
   rm -rf /home/$username/.cache/qBittorrent/
 fi
+
+if [[ -f "/usr/bin/qb-nox-static-419-lt1114-hdd" ]]; then
+  # 4.1.9
+  echo -e "\033[36m ================= 删除qb-nox 4.1.9 ================= \033[0m"
+  systemctl stop qb-nox-static-419-lt1114-hdd@$username
+  rm -rf /etc/systemd/system/qb-nox-static-419-lt1114-hdd@.service
+  rm -rf /usr/bin/qb-nox-static-419-lt1114-hdd
+  systemctl disable qb-nox-static-419-lt1114-hdd@$username
+  rm -rf /home/$username/.config/qBittorrent/
+  rm -rf /home/$username/.local/
+  rm -rf /home/$username/.cache/qBittorrent/
+fi
