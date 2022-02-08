@@ -90,7 +90,7 @@ Downloads\PreAllocation=false
 Downloads\SavePath=/home/$username/Downloads/
 Queueing\QueueingEnabled=false
 WebUI\Password_PBKDF2="@ByteArray($PBKDF2password)"
-WebUI\Port=$webprot
+WebUI\Port=$webport
 WebUI\Username=$username
 WebUI\CSRFProtection=false
 EOF
