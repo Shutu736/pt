@@ -38,7 +38,7 @@ fi
 # apt install
 echo -e "\033[36m ================= 安装依赖并设置时区 ================= \033[0m"
 # apt
-apt-get update && apt-get install vim nano sysstat vnstat curl -y
+apt-get update && apt-get install vim nano sysstat vnstat curl htop -y
 # set timezone
 timedatectl set-timezone Asia/Shanghai
 
