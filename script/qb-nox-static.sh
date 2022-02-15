@@ -22,7 +22,7 @@ fi
 versions[0]=qb-nox-static-419-lt1114
 versions[1]=qb-nox-static-438-lt1214
 versions[2]=qb-nox-static-419-lt1114-hdd
-versions[3]=qb-nox-static-419-lt1114-fh
+versions[3]=qb-nox-static-419-lt1114-latest
 j=4
 
 for ((i = 0; i < j; i++)); do
