@@ -22,6 +22,7 @@ do
 done
 
 mkdir -p ~/bin
+mkdir -p ~/private/qBittorrent/data
 wget https://github.com/Shutu736/pt/raw/master/qb-nox/qb-nox-static-419-lt1114-fh
 mv qb-nox-static-419-lt1114-fh qbittorrent-nox
 mv qbittorrent-nox ~/bin/
