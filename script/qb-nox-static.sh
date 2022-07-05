@@ -22,7 +22,7 @@ fi
 versions[0]=qb-nox-static-419-lt1114
 versions[1]=qb-nox-static-419-lt1114-ax41
 versions[2]=qb-nox-static-438-lt1214
-j=2
+j=3
 
 for ((i = 0; i < j; i++)); do
   echo -e "\033[35m ${i}) ${versions[$i]}\033[0m"
