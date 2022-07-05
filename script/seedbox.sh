@@ -92,9 +92,9 @@ if [ $dns_type ]; then
       error_page 404 /404.html;
       location / {
           proxy_pass http://127.0.0.1:webport/;
-          proxy_set_header Host $http_host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_http_version       1.1;
+          proxy_set_header         X-Forwarded-Host        $http_host;
+          http2_push_preload on; # Enable http2 push
       }
   }' >/etc/nginx/conf.d/$domain.conf
   # conf中的$domain替换为域名
