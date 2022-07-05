@@ -2,8 +2,7 @@
 # Author:               Shutu
 # Version:              1.0
 # Mail:                 shutu736@gmail.com
-# Date:                 2022-1-22
-# Description:          栗山未来大佬原创
+# Date:                 2022-7-5
 
 username=$1
 
@@ -32,25 +31,13 @@ if [[ -f "/usr/bin/qb-nox-static-419-lt1114" ]]; then
   rm -rf /home/$username/.cache/qBittorrent/
 fi
 
-if [[ -f "/usr/bin/qb-nox-static-419-lt1114-hdd" ]]; then
+if [[ -f "/usr/bin/qb-nox-static-419-lt1114-ax41" ]]; then
   # 4.1.9
   echo -e "\033[36m ================= 删除qb-nox 4.1.9 ================= \033[0m"
-  systemctl stop qb-nox-static-419-lt1114-hdd@$username
-  rm -rf /etc/systemd/system/qb-nox-static-419-lt1114-hdd@.service
-  rm -rf /usr/bin/qb-nox-static-419-lt1114-hdd
-  systemctl disable qb-nox-static-419-lt1114-hdd@$username
-  rm -rf /home/$username/.config/qBittorrent/
-  rm -rf /home/$username/.local/
-  rm -rf /home/$username/.cache/qBittorrent/
-fi
-
-if [[ -f "/usr/bin/qb-nox-static-419-lt1114-latest" ]]; then
-  # 4.1.9
-  echo -e "\033[36m ================= 删除qb-nox 4.1.9 ================= \033[0m"
-  systemctl stop qb-nox-static-419-lt1114-latest@$username
-  rm -rf /etc/systemd/system/qb-nox-static-419-lt1114-latest@.service
-  rm -rf /usr/bin/qb-nox-static-419-lt1114-latest
-  systemctl disable qb-nox-static-419-lt1114-latest@$username
+  systemctl stop qb-nox-static-419-lt1114-ax41@$username
+  rm -rf /etc/systemd/system/qb-nox-static-419-lt1114-ax41@.service
+  rm -rf /usr/bin/qb-nox-static-419-lt1114-ax41
+  systemctl disable qb-nox-static-419-lt1114-ax41@$username
   rm -rf /home/$username/.config/qBittorrent/
   rm -rf /home/$username/.local/
   rm -rf /home/$username/.cache/qBittorrent/

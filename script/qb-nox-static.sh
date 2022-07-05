@@ -2,7 +2,7 @@
 # Author:               Shutu
 # Version:              1.0
 # Mail:                 shutu736@gmail.com
-# Date:                 2022-1-22
+# Date:                 2022-7-5
 # Description:          栗山未来大佬原创
 
 if [ ! $username ]; then
@@ -20,7 +20,8 @@ if [ ! $port ]; then
 fi
 
 versions[0]=qb-nox-static-419-lt1114
-versions[1]=qb-nox-static-438-lt1214
+versions[1]=qb-nox-static-419-lt1114-ax41
+versions[2]=qb-nox-static-438-lt1214
 j=2
 
 for ((i = 0; i < j; i++)); do
