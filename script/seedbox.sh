@@ -104,10 +104,18 @@ if [ $dns_type ]; then
   nginx -s reload
 fi
 
+if [ "${versions[$num]}" == "qb-nox-static-419-lt1114-ln" ]; then
+  sed -i "s/MaxBandwidth 1000/MaxBandwidth 10000/g" /etc/vnstat.conf
+  systemctl restart vnstat
+fi
+
 echo -e "\033[36m ================= 安装成功 ================= \033[0m"
 if [ $domain ]; then
   echo -e "\033[35m 网址: https://$domain/ \033[0m"
+else
+  echo -e "\033[35m 网址: http://$(wget -qO - icanhazip.com):8080 \033[0m"
 fi
+echo -e "\033[35m qb版本: ${versions[$num]} \033[0m"
 echo -e "\033[35m 用户名: $username \033[0m"
 echo -e "\033[35m 密码: $password \033[0m"
 echo -e "\033[36m =========================================== \033[0m"
