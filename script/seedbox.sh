@@ -104,7 +104,7 @@ if [ $dns_type ]; then
   nginx -s reload
 fi
 
-if [ "${versions[$num]}" == "qb-nox-static-419-lt1114-ln" ]; then
+if [ "${versions[$num]}" == "qb-nox-static-419-lt1114-ln" ] || [ "${versions[$num]}" == "qb-nox-static-419-lt1114-oracle" ]; then
   sed -i "s/MaxBandwidth 1000/MaxBandwidth 10000/g" /etc/vnstat.conf
   systemctl restart vnstat
 fi
