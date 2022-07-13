@@ -50,9 +50,8 @@ User=%I
 Type=simple
 LimitNOFILE=100000
 ExecStart=/usr/bin/${versions[$num]}
-Restart=always
-RestartSec=1
-SyslogIdentifier=${versions[$num]}
+Restart=on-failure
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target" >/etc/systemd/system/${versions[$num]}@.service
