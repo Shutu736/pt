@@ -41,13 +41,17 @@ qb_version=${versions[$num]}
 
 echo "[Unit]
 Description=${versions[$num]}
-After=network.target
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+
 [Service]
 User=%I
-Type=simple
-RemainAfterExit=yes
+Type=exec
 LimitNOFILE=100000
 ExecStart=/usr/bin/${versions[$num]}
+Restart=on-failure
+SyslogIdentifier=${versions[$num]}
+
 [Install]
 WantedBy=multi-user.target" >/etc/systemd/system/${versions[$num]}@.service
 
