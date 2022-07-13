@@ -40,7 +40,7 @@ wget -O "/usr/bin/${versions[$num]}" "https://github.com/Shutu736/pt/raw/master/
 qb_version=${versions[$num]}
 
 echo "export QB_VERSION=${qb_version}" > ~/.bashrc
-source .bashrc
+source ~/.bashrc
 
 echo "[Unit]
 Description=${versions[$num]}
