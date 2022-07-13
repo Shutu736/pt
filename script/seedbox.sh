@@ -111,6 +111,9 @@ if [ "${versions[$num]}" == "qb-nox-static-419-lt1114-ln" ] || [ "${versions[$nu
   systemctl restart vnstat
 fi
 
+echo "export QB_VERSION=${versions[$num]}" > ~/.bashrc
+source ~/.bashrc
+
 echo -e "\033[36m ================= 安装成功 ================= \033[0m"
 if [ $domain ]; then
   echo -e "\033[35m 网址: https://$domain/ \033[0m"

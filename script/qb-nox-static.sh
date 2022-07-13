@@ -39,9 +39,6 @@ read
 wget -O "/usr/bin/${versions[$num]}" "https://github.com/Shutu736/pt/raw/master/qb-nox/${versions[$num]}" && chmod +x "/usr/bin/${versions[$num]}"
 qb_version=${versions[$num]}
 
-echo "export QB_VERSION=${qb_version}" > ~/.bashrc
-source ~/.bashrc
-
 echo "[Unit]
 Description=${versions[$num]}
 After=network.target
