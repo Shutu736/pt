@@ -43,7 +43,6 @@ echo "[Unit]
 Description=${versions[$num]}
 Wants=network-online.target
 After=network-online.target nss-lookup.target
-StartLimitIntervalSec=0
 
 [Service]
 User=%I
@@ -51,6 +50,7 @@ Type=simple
 LimitNOFILE=100000
 ExecStart=/usr/bin/${versions[$num]}
 Restart=on-failure
+TimeoutStopSec=20
 RestartSec=10
 
 [Install]
