@@ -111,7 +111,8 @@ if [ "${versions[$num]}" == "qb-nox-static-419-lt1114-ln" ] || [ "${versions[$nu
   systemctl restart vnstat
 fi
 
-echo "export QB_VERSION=${versions[$num]}@$username" >> /etc/profile
+echo "export QB_VERSION=${versions[$num]}
+export USERNAME=$username" >> /etc/profile
 source /etc/profile
 
 echo -e "\033[36m ================= 安装成功 ================= \033[0m"
